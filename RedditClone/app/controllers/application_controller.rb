@@ -1,22 +1,23 @@
 class ApplicationController < ActionController::Base
-  #poopoo
-  helper_method :current_guy, :logged_in?
+  protect_from_forgery with: :exception
+  helper_method :current_user, :logged_in?
   
-  def current_guy
-    @current_guy ||= User.find_by(session_token: session[:session_token])
+  def current_user
+    @current_user ||= User.find_by(session_token: session[:session_token])
   end
   
   def logged_in?
-    !!current_guy
+    !!current_user
   end
   
-  def login!(guy)
-    @current_guy = guy
-    session[:session_token] = guy.reset_session_token!
+  def login!(user)
+    @current_user = user
+    session[:session_token] = user.reset_session_token!
   end
   
   def logout!
-    current_guy.reset_session_token!
+    # byebug
+    current_user.try(:reset_session_token!)
     session[:session_token] = nil
   end
   

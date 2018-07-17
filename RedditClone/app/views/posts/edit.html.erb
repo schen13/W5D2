@@ -1,0 +1,28 @@
+<h3>Edit Post</h3>
+  
+<form action="<%= post_url(@post) %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <label for="title">
+  Title
+  <input type="text" name="post[title]" value="<%= @post.title %>">
+  </label>
+  
+  <label for="url">
+  URL
+  <input type="text" name="post[url]" value="<%= @post.url %>">
+  </label>
+  
+  <label for="content">
+  Content
+  <input type="text" name="post[content]" value="<%= @post.content %>">
+  </label>
+  
+  <input 
+    style="width: auto; height: 25px"
+    type="image" 
+    name="submit" 
+    src="https://i.kym-cdn.com/entries/icons/mobile/000/025/382/Screen_Shot_2018-02-06_at_3.37.14_PM.jpg" 
+    border="1" 
+    alt="Submit">
+</form>  

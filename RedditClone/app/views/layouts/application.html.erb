@@ -12,9 +12,9 @@
   <body>
     <header>
       <% if logged_in? %>
-        Hello, <%= current_guy.username %>
+        Hello, <%= current_user.username %>
         <form action="<%= session_url %>" method="post">
-          <%= auth_token %>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <input type="hidden" name="_method" value="delete">
           <input type="submit" value="CEASE MEMEING?">
         </form>
@@ -22,7 +22,11 @@
         <a href="<%= new_user_url %>">Sign Up</a>
         <a href="<%= new_session_url %>">Sign In</a>
       <% end %>
-    </header>    
+    </header>  
+    <% flash[:errors].try(:each) do |error| %>
+      <%= error %>
+    <% end %>  
+    
     <%= yield %>
   </body>
 </html>

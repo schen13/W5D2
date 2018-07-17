@@ -1,0 +1,49 @@
+<h3>Sub Page</h3>
+
+<a href="<%= subs_url %>">Back to Subs</a>
+<br>
+
+Moderator: <%= @sub.moderator.username %>
+<h4> <%= @sub.title %> </h4>
+<%= @sub.description %>
+
+<br>
+
+<% if current_user == @sub.moderator %>
+  <a href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
+
+<% end %>
+
+<br>
+<br>
+
+<a href="<%= new_sub_post_url(@sub.id) %>">Make New Post</a>
+
+<br>
+
+<% @sub.posts.each do |post| %>
+  Title <%= post.title %>
+  <br>
+  Author <%= post.author.username %>
+  <br>
+  <%= post.content %>
+  <br>
+  
+  <% if current_user == @sub.moderator || current_user == post.author %>
+    <form action="<%= edit_post_url(post) %>" method="post">
+      <input type="hidden" name="_method" value="get">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" value="Edit Post">
+    </form>
+    
+    <form action="<%= post_url(post) %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" value="Remove Post">
+    </form>
+  <% end %>
+  <br>
+<% end %>
+
+
+

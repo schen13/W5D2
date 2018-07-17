@@ -19,6 +19,9 @@ class User < ApplicationRecord
   
   after_initialize :ensure_session_token
   
+  has_many :subs
+  has_many :posts
+  
   def ensure_session_token
     self.session_token ||= SecureRandom.urlsafe_base64
   end
@@ -37,9 +40,10 @@ class User < ApplicationRecord
   def is_password?(password)
     BCrypt::Password.new(self.password_digest).is_password?(password)
   end
+  
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
-    return nil unless user && user.is_password?(password)
+    return nil unless (user && user.is_password?(password))
     user
   end
 
