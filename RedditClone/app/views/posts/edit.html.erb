@@ -18,6 +18,22 @@
   <input type="text" name="post[content]" value="<%= @post.content %>">
   </label>
   
+  <br>
+  <b>Sub</b>
+  <br>
+  <input type="hidden" name="post[sub_ids][]" value="">
+  <% Sub.all.each do |a_sub| %>
+    <label for="">
+      <input 
+        type="checkbox" 
+        name="post[sub_ids][]" 
+        value="<%= a_sub.id %>"
+        <%= "checked" if @post.sub_ids.include?(a_sub.id)%> >
+      <%= a_sub.title %>
+    </label>
+    <br>
+  <% end %>
+  
   <input 
     style="width: auto; height: 25px"
     type="image" 
